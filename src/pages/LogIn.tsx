@@ -1,5 +1,7 @@
 // Basic imports
 import { useCallback, useState, useContext } from 'react'
+import { IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet';
 
@@ -31,6 +33,7 @@ export default function LogIn() {
     // Login / Password
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
 
     // Error modal window
     const [isOpen, setIsOpen] = useState(false)
@@ -137,7 +140,30 @@ export default function LogIn() {
 
                     {/* Password */}
                     <label htmlFor='password'>PASSWORD: </label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} id='password' />
+                    <div style={{ position: 'relative'}}>
+                        <input 
+                            type={showPassword ? 'text' : 'password'}
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            id='password'
+                            className={styles.signup_form_input}
+                        />
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                            style={{
+                                margin: 0,
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                padding: '4px'
+                            }}
+                        >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </div>
                     
                     {/* Note */}
                     <span style={{ fontSize: '16px', width: '550px', textAlign: 'center' }}>Password recovery is not available directly, as email or phone number cannot be attached to the account, so contact administration directly in Discord or Telegram! </span>
