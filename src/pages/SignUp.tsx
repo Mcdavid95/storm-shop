@@ -16,6 +16,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import ModalFail from '../components/ModalFail/index.js'
 import ModalSuccess from '../components/ModalSuccess/index.js'
 import { StormButton, PinkButton } from '../styles/mui.js';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 
 export default function SignUp() {
     // Basic variables
@@ -39,6 +41,9 @@ export default function SignUp() {
     // Success modal window
     const [isSuccessOpen, setIsSuccessOpen] = useState(false)
     const [modalSuccessContent, setModalSuccessContent] = useState('')
+
+    // Show password
+    const [showPassword, setShowPassword] = useState(false)
 
     // Function to close modal window
     function onClose() {
@@ -141,7 +146,30 @@ export default function SignUp() {
 
                     {/* Password */}
                     <label htmlFor='password'>PASSWORD: </label>
-                    <input onChange={(e) => setPassword(e.target.value)} value={password} id='password' />
+                    <div style={{ position: 'relative'}}>
+                        <input 
+                            type={showPassword ? 'text' : 'password'}
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            id='password'
+                            className={styles.signup_form_input}
+                        />
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                            style={{
+                                margin: 0,
+                                position: 'absolute',
+                                right: '0.5rem',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                padding: '4px'
+                            }}
+                        >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </div>
 
                     {/* Notes */}
                     <span style={{ fontSize: '16px' }}>Password must be at least 16 characters and no more than 32! </span>
